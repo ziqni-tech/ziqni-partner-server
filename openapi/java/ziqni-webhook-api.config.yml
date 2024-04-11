@@ -1,0 +1,7 @@
+basePackage: com.ziqni.webhook
+configPackage: com.ziqni.webhook.config
+apiPackage: com.ziqni.webhook.api
+modelPackage: com.ziqni.webhook.model
+groupId: com.ziqni
+artifactId: ziqni-webhook-api
+hideGenerationTimestamp: true

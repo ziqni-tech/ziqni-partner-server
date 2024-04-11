@@ -2,7 +2,7 @@ package com.ziqni.member.controller;
 
 import com.ziqni.common.AbstractApiInvoker;
 import com.ziqni.common.Response;
-import com.ziqni.member.data.CreateMemberRequest;
+import com.ziqni.webhook.api.model.NewMember;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,10 +18,10 @@ public class MemberController extends AbstractApiInvoker {
     public static final String ZIQNI_WEBHOOK_URL = "https://your.server.com/ziqni/webhook";
 
     @PostMapping
-    public Response save(@RequestBody CreateMemberRequest createMemberRequest) {
+    public Response save(@RequestBody NewMember newMember) {
         final var headers = getRequestHeaders();
 
-        final var requestEntity = new HttpEntity<>(createMemberRequest, headers);
+        final var requestEntity = new HttpEntity<>(newMember, headers);
         return restTemplate.exchange(
                 ZIQNI_WEBHOOK_URL, HttpMethod.POST, requestEntity, Response.class).getBody();
 
