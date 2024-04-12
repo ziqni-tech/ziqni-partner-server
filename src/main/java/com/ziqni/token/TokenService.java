@@ -25,11 +25,12 @@ public class TokenService {
      * @return The completable future
      */
     public CompletableFuture<TokenResponse> getToken(TokenRequest tokenRequest) {
+
         final var memberRefId = makeMemberRefId(tokenRequest);
-        return memberExistsElseCreate(memberRefId, tokenRequest)
-                .thenCompose( unused ->
-                        ziqniAdminApiFactory.getMemberTokenApi().createMemberToken(prepareMemberTokenRequest(memberRefId, tokenRequest))
-                  );
+
+        return memberExistsElseCreate(memberRefId, tokenRequest).thenCompose( unused ->
+                ziqniAdminApiFactory.getMemberTokenApi().createMemberToken(prepareMemberTokenRequest(memberRefId, tokenRequest))
+        );
     }
 
     /**
