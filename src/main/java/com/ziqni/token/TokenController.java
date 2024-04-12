@@ -1,7 +1,7 @@
 package com.ziqni.token;
 
-import com.ziqni.admin.sdk.model.MemberTokenRequest;
 import com.ziqni.admin.sdk.model.TokenResponse;
+import com.ziqni.model.TokenRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,9 +17,9 @@ public class TokenController {
 
     private final TokenService tokenService;
     @PostMapping
-    public CompletableFuture<TokenResponse> getToken(@RequestBody MemberTokenRequest memberTokenRequest) {
+    public CompletableFuture<TokenResponse> getToken(@RequestBody TokenRequest tokenRequest) {
 
-        return tokenService.getToken(memberTokenRequest);
+        return tokenService.getToken(tokenRequest);
     }
 
 }
