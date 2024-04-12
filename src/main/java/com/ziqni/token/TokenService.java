@@ -24,11 +24,11 @@ public class TokenService {
         this.ziqniAdminApiFactory = ziqniAdminApiFactory;
     }
 
-    public CompletableFuture<TokenResponse> getToken(String memberRefId) {
+    public CompletableFuture<TokenResponse> getToken(MemberTokenRequest memberTokenRequest) {
 
 
-      return     memberExistsElseCreate(memberRefId).thenCompose(r->
-                          ziqniAdminApiFactory.getMemberTokenApi().createMemberToken(getMemberTokenRequest(memberRefId, apiKey, GAPI_RESOURCE_NAME, true,60, "USD"))
+      return     memberExistsElseCreate(memberTokenRequest.getMember()).thenCompose(r->
+                          ziqniAdminApiFactory.getMemberTokenApi().createMemberToken(memberTokenRequest)
                   );
 
     }
