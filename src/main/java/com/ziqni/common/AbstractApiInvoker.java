@@ -8,16 +8,16 @@ import org.springframework.web.client.RestTemplate;
 import static com.ziqni.common.Utils.getHttpHeaders;
 
 public abstract class AbstractApiInvoker {
-    @Autowired
-    protected TokenService tokenService;
-
-    @Autowired
-    protected RestTemplate restTemplate;
-
-    public final HttpHeaders getRequestHeaders() {
-        final String token = tokenService.getToken();
-        final HttpHeaders headers = getHttpHeaders();
-        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
-        return headers;
-    }
+//    @Autowired
+//    protected TokenService tokenService;
+//
+//    @Autowired
+//    protected RestTemplate restTemplate;
+//
+//    public final HttpHeaders getRequestHeaders() {
+//        final String token = tokenService.getToken();
+//        final HttpHeaders headers = getHttpHeaders();
+//        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+//        return headers;
+//    }
 }
