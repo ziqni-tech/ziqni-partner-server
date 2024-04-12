@@ -80,6 +80,8 @@ public class TokenService {
                 .memberRefId(memberRefId)
                 .name(tokenRequest.getPlayerId())
                 .memberType(MemberType.INDIVIDUAL)
+                //.tags(List.of("player")) // These are user segments like, Casual, Hardcore, AchievementHunter, etc
+                .timeZoneOffset("UTC") // <<< Default is UTC. Three-letter time zone ID. https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html#getAvailableIDs%28%29
                 .customFields(customFields);
     }
 
