@@ -1,7 +1,7 @@
 package com.ziqni;
 
-import com.ziqni.admin.sdk.model.MemberTokenRequest;
 import com.ziqni.admin.sdk.model.TokenResponse;
+import com.ziqni.model.TokenRequest;
 import com.ziqni.token.TokenService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +16,7 @@ public class TokenServiceTest {
 
     @Test
     public void getTokenTest(){
-        TokenResponse tokenResponse = tokenService.getToken(getMemberTokenRequest("","", "gapi", true,60, "USD")).join();
+        TokenResponse tokenResponse = tokenService.getToken(new TokenRequest().setOperatorId("123").setPlayerId("456").setCurrencyCode("USD")).join();
         assertNotNull(tokenResponse);
-    }
-    public MemberTokenRequest getMemberTokenRequest(String member, String apiKey, String resource, boolean isReferenceId, int expires, String currencyKey) {
-        return new MemberTokenRequest()
-                .member(member)
-                .apiKey(apiKey)
-                .resource(resource)
-                .isReferenceId(isReferenceId)
-                .expires(expires)
-                .currencyKey(currencyKey);
-
     }
 }
