@@ -4,6 +4,7 @@ import com.ziqni.admin.sdk.ZiqniAdminApiFactory;
 import com.ziqni.admin.sdk.model.*;
 import com.ziqni.model.TokenRequest;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.concurrent.CompletableFuture;
 public class TokenService {
 
     private final ZiqniAdminApiFactory ziqniAdminApiFactory;
+    @Value("${space.apiKey}")
+    private String apiKey;
 
     public TokenService(ZiqniAdminApiFactory ziqniAdminApiFactory) {
         this.ziqniAdminApiFactory = ziqniAdminApiFactory;
@@ -94,7 +97,7 @@ public class TokenService {
     public MemberTokenRequest prepareMemberTokenRequest(String memberRefId, TokenRequest tokenRequest) {
         return new MemberTokenRequest()
                 .member(memberRefId)
-                .apiKey("get the API key from properties file")
+                .apiKey(apiKey)
                 .resource("g-api")
                 .isReferenceId(true)
                 .expires(60_000)

@@ -90,16 +90,6 @@ public class AdminApiClientConfiguration {
         return identityClient;
     }
 
-    public String getAccessTokenString() throws Exception {
-        if(isApiKey)
-            return getAdminClientIdentityApiKey();
-
-        return IdentityAuthorization.getAccessTokenString(getIdentityClient());
-    }
-
-    public Optional<String> getByName(String parameterName) {
-        return ConfigurationLoader.getParameter(parameterName);
-    }
 
     public AdminApiClientConfiguration setAdminClientServerBasePath(String adminClientServerBasePath) {
         this.adminClientServerBasePath = adminClientServerBasePath;
