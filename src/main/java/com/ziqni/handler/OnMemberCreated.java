@@ -7,12 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class OnMemberCreated {
 
-    public void handle(WebhookRequestBody body)
+    public void handle(NewMember event)
     {
-         new NewMember().memberId(body.getMemberId())
-                 .accountId(body.getAccountId())
-                 .constraints(body.getConstraints())
-                 .memberRefId(body.getMemberRefId()).metadata(body.getMetadata()).objectType(body.getObjectType());
+
 
     }
 }

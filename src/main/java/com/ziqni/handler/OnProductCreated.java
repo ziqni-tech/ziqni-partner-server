@@ -7,15 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class OnProductCreated {
 
-    public void handle(WebhookRequestBody body)
+    public void handle(NewProduct event)
     {
-      new NewProduct().productRefId(body.getProductRefId())
-              .accountId(body.getAccountId())
-              .productName(body.getProductName())
-              .productId(body.getProductId())
-              .spaceName(body.getSpaceName())
-              .constraints(body.getConstraints())
-              .metadata(body.getMetadata()).objectType(body.getObjectType());
+
 
     }
 }

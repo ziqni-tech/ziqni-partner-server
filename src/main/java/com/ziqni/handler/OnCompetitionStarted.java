@@ -9,14 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class OnCompetitionStarted {
 
-    public void handle(WebhookRequestBody body)
+    public void handle(CompetitionStarted event)
     {
-         new CompetitionStarted().competitionId(body.getCompetitionId())
-                 .accountId(body.getAccountId())
-                 .constraints(body.getConstraints())
-                 .spaceName(body.getSpaceName())
-                 .competitionName(body.getMemberRefId())
-                 .metadata(body.getMetadata()).objectType(body.getObjectType());
+
 
     }
 }
