@@ -4,11 +4,8 @@
 package com.ziqni.webhook;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public enum WebhookTriggerType {
 
@@ -59,10 +56,8 @@ public enum WebhookTriggerType {
         ON_EVENT_TYPE_NAMES.put(WebhookTriggerType.onAchievementRewardClaimedTrigger, "onAchievementRewardClaimed");
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(WebhookTriggerType.class);
-
-    private String triggerName;
-    private String value;
+    private final String triggerName;
+    private final String value;
 
     WebhookTriggerType(String value, String triggerName) {
         this.value = value;
@@ -83,33 +78,4 @@ public enum WebhookTriggerType {
     public String toString() {
         return String.valueOf(value);
     }
-
-    public static List<String> getListOfWebhookTriggerTypeValues() {
-        return Arrays.stream(WebhookTriggerType.values()).map(WebhookTriggerType::getValue).collect(Collectors.toList());
-    }
-
-    public static WebhookTriggerType[] getListOfWebhookTriggers() {
-        return WebhookTriggerType.values();
-    }
-
-    public static final Map<String, WebhookTriggerType> All = Arrays.stream(WebhookTriggerType.values()).collect(Collectors.toMap(x->x.value,x->x, (val1, val2) -> {
-        logger.error("Duplicate key found with [{}|{}]", val1, val2);
-        return val1;
-    }));
-
-    public static List<WebhookTriggerType> fromList(String accountId, String id, List<String> in){
-        if(in == null || in.isEmpty())
-            return List.of();
-
-        var out = new HashSet<WebhookTriggerType>();
-
-        in.forEach(w -> {
-            if(All.containsKey(w))
-                out.add(All.get(w));
-            else
-                logger.error("Account [{}] - ID: {}, Invalid webhook trigger type {} ", accountId, id, w);
-        });
-        return new ArrayList<>(out);
-    }
-
 }
