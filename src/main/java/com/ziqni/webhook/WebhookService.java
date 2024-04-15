@@ -187,6 +187,8 @@ public class WebhookService implements WebhooksApiDelegate {
                     .constraints(body.getConstraints())
                     .spaceName(body.getSpaceName())
                     .achievementName(body.getAchievementName())
+                            .memberId(body.getMemberId())
+                            .memberRefId(body.getMemberRefId())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
