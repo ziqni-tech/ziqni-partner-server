@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import static com.ziqni.webhook.WebhookTriggerType.ON_EVENT_TYPE_NAMES;
-
 @Service
 @RequiredArgsConstructor
 public class WebhookService implements WebhooksApiDelegate {
@@ -43,14 +41,14 @@ public class WebhookService implements WebhooksApiDelegate {
                                           String xWebhookId,
                                           WebhookRequestBody body) {
 
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onNewMemberTrigger))) {
+        if(xOnEvent.equals(WebhookTriggerType.onNewMemberTrigger.getTriggerName())) {
             onMemberCreated.handle
                     (new NewMember().memberId(body.getMemberId())
                     .accountId(body.getAccountId())
                     .constraints(body.getConstraints())
                     .memberRefId(body.getMemberRefId()).metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onNewProductTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onNewProductTrigger.getTriggerName())) {
             onProductCreated.handle(   new NewProduct().productRefId(body.getProductRefId())
                     .accountId(body.getAccountId())
                     .productName(body.getProductName())
@@ -59,7 +57,7 @@ public class WebhookService implements WebhooksApiDelegate {
                     .constraints(body.getConstraints())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onCompetitionCreatedTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onCompetitionCreatedTrigger.getTriggerName())) {
             onCompetitionCreated.handle(new CompetitionCreated().competitionId(body.getCompetitionId())
                     .competitionName(body.getCompetitionName())
                     .accountId(body.getAccountId())
@@ -67,7 +65,15 @@ public class WebhookService implements WebhooksApiDelegate {
                     .spaceName(body.getSpaceName())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onCompetitionStartedTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onContestCreatedTrigger.getTriggerName())) {
+            onContestCreated.handle(new ContestCreated().contestId(body.getContestId())
+                    .contestName(body.getContestName())
+                    .accountId(body.getAccountId())
+                    .constraints(body.getConstraints())
+                    .spaceName(body.getSpaceName())
+                    .metadata(body.getMetadata()).objectType(body.getObjectType()));
+        }
+        else if(xOnEvent.equals(WebhookTriggerType.onCompetitionStartedTrigger.getTriggerName())) {
             onCompetitionStarted.handle(new CompetitionStarted().competitionId(body.getCompetitionId())
                     .accountId(body.getAccountId())
                     .constraints(body.getConstraints())
@@ -75,7 +81,7 @@ public class WebhookService implements WebhooksApiDelegate {
                     .competitionName(body.getMemberRefId())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onCompetitionFinishedTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onCompetitionFinishedTrigger.getTriggerName())) {
             onCompetitionFinished.handle(new CompetitionFinished().competitionId(body.getCompetitionId())
                     .accountId(body.getAccountId())
                     .constraints(body.getConstraints())
@@ -83,15 +89,7 @@ public class WebhookService implements WebhooksApiDelegate {
                     .competitionName(body.getMemberRefId())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onCompetitionStartedTrigger))) {
-            onCompetitionCancelled.handle(new CompetitionCancelled().competitionId(body.getCompetitionId())
-                    .accountId(body.getAccountId())
-                    .constraints(body.getConstraints())
-                    .spaceName(body.getSpaceName())
-                    .competitionName(body.getMemberRefId())
-                    .metadata(body.getMetadata()).objectType(body.getObjectType()));
-        }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onCompetitionRewardIssuedTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onCompetitionRewardIssuedTrigger.getTriggerName())) {
             onCompetitionRewardIssued.handle(new CompetitionRewardIssued().competitionId(body.getCompetitionId())
                     .accountId(body.getAccountId())
                     .constraints(body.getConstraints())
@@ -99,15 +97,7 @@ public class WebhookService implements WebhooksApiDelegate {
                     .competitionName(body.getMemberRefId())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onCompetitionRewardIssuedTrigger))) {
-            onCompetitionRewardIssued.handle(new CompetitionRewardIssued().competitionId(body.getCompetitionId())
-                    .accountId(body.getAccountId())
-                    .constraints(body.getConstraints())
-                    .spaceName(body.getSpaceName())
-                    .competitionName(body.getMemberRefId())
-                    .metadata(body.getMetadata()).objectType(body.getObjectType()));
-        }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onContestCancelledTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onContestCancelledTrigger.getTriggerName())) {
             onContestCancelled.handle(new ContestCancelled().contestId(body.getCompetitionId())
                     .accountId(body.getAccountId())
                     .constraints(body.getConstraints())
@@ -115,7 +105,15 @@ public class WebhookService implements WebhooksApiDelegate {
                     .contestName(body.getMemberRefId())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onContestFinalisedTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onCompetitionCancelledTrigger.getTriggerName())) {
+            onCompetitionCancelled.handle(new CompetitionCancelled().competitionId(body.getCompetitionId())
+                    .accountId(body.getAccountId())
+                    .constraints(body.getConstraints())
+                    .spaceName(body.getSpaceName())
+                    .competitionName(body.getMemberRefId())
+                    .metadata(body.getMetadata()).objectType(body.getObjectType()));
+        }
+        else if(xOnEvent.equals(WebhookTriggerType.onContestFinalisedTrigger.getTriggerName())) {
             onContestFinalised.handle(new ContestFinalised().contestId(body.getCompetitionId())
                     .accountId(body.getAccountId())
                     .constraints(body.getConstraints())
@@ -123,7 +121,7 @@ public class WebhookService implements WebhooksApiDelegate {
                     .contestName(body.getMemberRefId())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onContestFinishedTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onContestFinishedTrigger.getTriggerName())) {
             onContestFinished.handle(new ContestFinished().contestId(body.getContestId())
                     .accountId(body.getAccountId())
                     .constraints(body.getConstraints())
@@ -132,7 +130,7 @@ public class WebhookService implements WebhooksApiDelegate {
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
 
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onContestRewardClaimedTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onContestRewardClaimedTrigger.getTriggerName())) {
             onContestRewardClaimed.handle(new ContestRewardClaimed().contestId(body.getContestId())
                     .rewardId(body.getRewardId())
                     .rewardName(body.getRewardName())
@@ -145,7 +143,7 @@ public class WebhookService implements WebhooksApiDelegate {
                     .contestName(body.getMemberRefId())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onContestRewardIssuedTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onContestRewardIssuedTrigger.getTriggerName())) {
             onContestRewardIssued.handle(new ContestRewardIssued().contestId(body.getContestId())
                     .rewardId(body.getRewardId())
                     .rewardName(body.getRewardName())
@@ -159,7 +157,7 @@ public class WebhookService implements WebhooksApiDelegate {
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
 
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onContestRewardCreatedTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onContestRewardCreatedTrigger.getTriggerName())) {
             onContestRewardCreated.handle(new ContestRewardCreated().contestName(body.getContestId())
                             .rewardId(body.getRewardId())
                             .rewardName(body.getRewardName())
@@ -171,7 +169,7 @@ public class WebhookService implements WebhooksApiDelegate {
                     .spaceName(body.getSpaceName())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onAchievementRewardClaimedTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onAchievementRewardClaimedTrigger.getTriggerName())) {
             onAchievementRewardClaimed.handle(new AchievementRewardClaimed().achievementId(body.getAchievementId())
                     .accountId(body.getAccountId())
                     .constraints(body.getConstraints())
@@ -180,7 +178,7 @@ public class WebhookService implements WebhooksApiDelegate {
                             .awardId(body.getAwardId())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onAchievementRewardCreatedTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onAchievementRewardCreatedTrigger.getTriggerName())) {
             onAchievementRewardCreated.handle(new AchievementRewardCreated().achievementName(body.getAchievementId())
                     .rewardId(body.getRewardId())
                     .rewardName(body.getRewardName())
@@ -192,7 +190,7 @@ public class WebhookService implements WebhooksApiDelegate {
                     .achievementName(body.getAchievementName())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onAchievementRewardIssuedTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onAchievementRewardIssuedTrigger.getTriggerName())) {
             onAchievementRewardIssued.handle(new AchievementRewardIssued().achievementId(body.getAchievementId())
                     .accountId(body.getAccountId())
                     .constraints(body.getConstraints())
@@ -201,7 +199,7 @@ public class WebhookService implements WebhooksApiDelegate {
                     .awardId(body.getAwardId())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onAchievementTriggeredTrigger))) {
+        else if(xOnEvent.equals(WebhookTriggerType.onAchievementTriggeredTrigger.getTriggerName())) {
             onAchievementTriggered.handle(new AchievementTriggered().achievementId(body.getAchievementId())
                     .accountId(body.getAccountId())
                     .constraints(body.getConstraints())
@@ -209,17 +207,11 @@ public class WebhookService implements WebhooksApiDelegate {
                     .achievementName(body.getAchievementName())
                     .metadata(body.getMetadata()).objectType(body.getObjectType()));
         }
-        if (xOnEvent.equals(ON_EVENT_TYPE_NAMES.get(WebhookTriggerType.onCompetitionStartedTrigger))) {
-            onContestCreated.handle(new ContestCreated().contestId(body.getContestId())
-                    .accountId(body.getAccountId())
-                    .constraints(body.getConstraints())
-                    .spaceName(body.getSpaceName())
-                    .contestName(body.getContestName())
-                    .metadata(body.getMetadata()).objectType(body.getObjectType()));
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-
-        return null;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
