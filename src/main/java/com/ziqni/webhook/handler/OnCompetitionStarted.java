@@ -1,18 +1,17 @@
-package com.ziqni.handler;
+package com.ziqni.webhook.handler;
 
-import com.ziqni.admin.sdk.model.Competition;
 import com.ziqni.api.model.CompetitionCreated;
+import com.ziqni.api.model.CompetitionStarted;
 import com.ziqni.api.model.NewMember;
 import com.ziqni.api.model.WebhookRequestBody;
 import org.springframework.stereotype.Component;
-import com.ziqni.api.model.*;
 
 @Component
-public class OnCompetitionCreated {
+public class OnCompetitionStarted {
 
-    public void handle(CompetitionCreated event)
+    public void handle(CompetitionStarted event)
     {
-        ;
+
 
     }
 }

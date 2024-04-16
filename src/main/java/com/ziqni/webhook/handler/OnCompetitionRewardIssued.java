@@ -1,4 +1,4 @@
-package com.ziqni.handler;
+package com.ziqni.webhook.handler;
 
 import com.ziqni.api.model.CompetitionRewardIssued;
 import com.ziqni.api.model.CompetitionStarted;

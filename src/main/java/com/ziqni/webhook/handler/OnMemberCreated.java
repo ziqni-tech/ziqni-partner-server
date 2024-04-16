@@ -1,4 +1,4 @@
-package com.ziqni.handler;
+package com.ziqni.webhook.handler;
 
 import com.ziqni.api.model.NewMember;
 import com.ziqni.api.model.WebhookRequestBody;

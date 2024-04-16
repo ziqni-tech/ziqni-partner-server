@@ -2,7 +2,7 @@ package com.ziqni.webhook;
 
 import com.ziqni.api.model.*;
 import com.ziqni.api.services.WebhooksApiDelegate;
-import com.ziqni.handler.*;
+import com.ziqni.webhook.handler.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

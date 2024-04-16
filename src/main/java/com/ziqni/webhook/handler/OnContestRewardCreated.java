@@ -1,4 +1,4 @@
-package com.ziqni.handler;
+package com.ziqni.webhook.handler;
 
 import com.ziqni.api.model.ContestRewardCreated;
 import org.springframework.stereotype.Component;
