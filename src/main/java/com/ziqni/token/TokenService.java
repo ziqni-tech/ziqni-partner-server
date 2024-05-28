@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 public class TokenService {
 
     private final ZiqniAdminApiFactory ziqniAdminApiFactory;
-    @Value("${admin.client.auth.key}")
+    @Value("${admin.client.auth.api.key}")
     private String apiKey;
 
     public TokenService(ZiqniAdminApiFactory ziqniAdminApiFactory) {
