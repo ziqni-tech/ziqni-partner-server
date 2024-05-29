@@ -24,51 +24,54 @@ public class TokenService {
 
     /**
      * Get the token
+     *
      * @param tokenRequest The token request
      * @return The completable future
      */
     public CompletableFuture<TokenResponse> getToken(TokenRequest tokenRequest) {
 
-        final var memberRefId = makeMemberRefId(tokenRequest);
+        final var memberRefId = tokenRequest.getPlayerId();
 
-        return memberExistsElseCreate(memberRefId, tokenRequest).thenCompose( unused ->
-                ziqniAdminApiFactory.getMemberTokenApi().createMemberToken(prepareMemberTokenRequest(memberRefId, tokenRequest))
-        );
+        return memberExistsElseCreate(memberRefId, tokenRequest).thenCompose(unused ->
+
+                ziqniAdminApiFactory.getMemberTokenApi().createMemberToken(prepareMemberTokenRequest(memberRefId, tokenRequest)));
     }
 
     /**
      * Check if the member exists else create the member
-     * @param memberRefId The member reference id
+     *
+     * @param memberRefId  The member reference id
      * @param tokenRequest The token request
      * @return The completable future
      */
     private CompletableFuture<Void> memberExistsElseCreate(String memberRefId, TokenRequest tokenRequest) {
 
-        return ziqniAdminApiFactory.getMembersApi().getMembersByRefId(List.of(memberRefId),1,0).thenCompose(memberResponse ->
-                {
-                    if(CollectionUtils.isEmpty(memberResponse.getResults())) {
-                        return ziqniAdminApiFactory.getMembersApi().createMembers(List.of(prepareCreateMemberRequest(memberRefId, tokenRequest)))
-                                .thenAccept(modelApiResponse -> {
-                                    // Handle the response here
-                                });
-                    }
-                    else
-                        return CompletableFuture.completedFuture(null);
-                });
+        return ziqniAdminApiFactory.getMembersApi().getMembersByRefId(List.of(memberRefId), 1, 0).thenCompose(memberResponse ->
+        {
+            if (CollectionUtils.isEmpty(memberResponse.getResults())) {
+                return ziqniAdminApiFactory.getMembersApi().createMembers(List.of(prepareCreateMemberRequest(memberRefId, tokenRequest)))
+                        .thenAccept(modelApiResponse -> {
+                            // Handle the response here
+                        });
+            } else
+                return CompletableFuture.completedFuture(null);
+        });
     }
 
     /**
      * Make the member reference id
+     *
      * @param tokenRequest The token request
      * @return The member reference id
      */
     private static String makeMemberRefId(TokenRequest tokenRequest) {
-        return tokenRequest.getOperatorId()+"_"+tokenRequest.getPlayerId();
+        return tokenRequest.getOperatorId() + "_" + tokenRequest.getPlayerId();
     }
 
     /**
      * Prepare the create member request
-     * @param memberRefId The member reference id
+     *
+     * @param memberRefId  The member reference id
      * @param tokenRequest The token request
      * @return The create member request
      */
@@ -90,7 +93,8 @@ public class TokenService {
 
     /**
      * Prepare the member token request
-     * @param memberRefId The member reference id
+     *
+     * @param memberRefId  The member reference id
      * @param tokenRequest The token request
      * @return The member token request
      */
@@ -98,7 +102,7 @@ public class TokenService {
         return new MemberTokenRequest()
                 .member(memberRefId)
                 .apiKey(apiKey)
-                .resource("g-api")
+                .resource("ziqni-gapi")
                 .isReferenceId(true)
                 .expires(60_000)
                 .currencyKey(tokenRequest.getCurrencyCode());
