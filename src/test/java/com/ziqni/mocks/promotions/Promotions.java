@@ -11,7 +11,7 @@ public class Promotions {
 
 
     public void addPromotion(Promotion promotion){
-        cache.put(promotion.getName(), promotion);
+        cache.compute(promotion.getId(), (k,v) -> promotion);
     }
 
     public boolean playerHasActivePromotions(String playerId, String operatorId){
