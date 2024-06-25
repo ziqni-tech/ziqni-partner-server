@@ -1,25 +1,13 @@
 package com.ziqni.mocks.promotions;
 
 import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 /**
  * ComplexFilters
  */
-@JsonPropertyOrder({
-        ComplexFilters.JSON_PROPERTY_SHOULD_MATCH_AT_LEAST,
-        ComplexFilters.JSON_PROPERTY_MUST_NOT,
-        ComplexFilters.JSON_PROPERTY_SHOULD,
-        ComplexFilters.JSON_PROPERTY_MUST
-})
-@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class ComplexFilters {
     public static final String JSON_PROPERTY_SHOULD_MATCH_AT_LEAST = "shouldMatchAtLeast";
     private Integer shouldMatchAtLeast;
@@ -45,18 +33,10 @@ public class ComplexFilters {
      * integer
      * @return shouldMatchAtLeast
      **/
-    @javax.annotation.Nonnull
-    @ApiModelProperty(required = true, value = "integer")
-    @JsonProperty(JSON_PROPERTY_SHOULD_MATCH_AT_LEAST)
-    @JsonInclude(value = JsonInclude.Include.ALWAYS)
-
     public Integer getShouldMatchAtLeast() {
         return shouldMatchAtLeast;
     }
 
-
-    @JsonProperty(JSON_PROPERTY_SHOULD_MATCH_AT_LEAST)
-    @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public void setShouldMatchAtLeast(Integer shouldMatchAtLeast) {
         this.shouldMatchAtLeast = shouldMatchAtLeast;
     }
@@ -79,18 +59,11 @@ public class ComplexFilters {
      * Get mustNot
      * @return mustNot
      **/
-    @javax.annotation.Nullable
-    @ApiModelProperty(value = "")
-    @JsonProperty(JSON_PROPERTY_MUST_NOT)
-    @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
     public List<String> getMustNot() {
         return mustNot;
     }
 
 
-    @JsonProperty(JSON_PROPERTY_MUST_NOT)
-    @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public void setMustNot(List<String> mustNot) {
         this.mustNot = mustNot;
     }
@@ -113,18 +86,10 @@ public class ComplexFilters {
      * Get should
      * @return should
      **/
-    @javax.annotation.Nullable
-    @ApiModelProperty(value = "")
-    @JsonProperty(JSON_PROPERTY_SHOULD)
-    @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
     public List<String> getShould() {
         return should;
     }
 
-
-    @JsonProperty(JSON_PROPERTY_SHOULD)
-    @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public void setShould(List<String> should) {
         this.should = should;
     }
@@ -147,18 +112,10 @@ public class ComplexFilters {
      * Get must
      * @return must
      **/
-    @javax.annotation.Nullable
-    @ApiModelProperty(value = "")
-    @JsonProperty(JSON_PROPERTY_MUST)
-    @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
     public List<String> getMust() {
         return must;
     }
 
-
-    @JsonProperty(JSON_PROPERTY_MUST)
-    @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public void setMust(List<String> must) {
         this.must = must;
     }
@@ -167,7 +124,6 @@ public class ComplexFilters {
     /**
      * Return true if this ComplexFilters object is equal to o.
      */
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
