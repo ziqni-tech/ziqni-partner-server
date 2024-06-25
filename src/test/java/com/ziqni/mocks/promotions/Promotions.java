@@ -5,10 +5,12 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Promotions
+ */
 public class Promotions {
 
     ConcurrentHashMap<String, Promotion> cache = new ConcurrentHashMap<>();
-
 
     public void addPromotion(Promotion promotion){
         cache.compute(promotion.getId(), (k,v) -> promotion);
@@ -27,6 +29,11 @@ public class Promotions {
         cache.values().removeIf(promotion -> promotion.getEndDate().isBefore(OffsetDateTime.now()));
     }
 
+    /**
+     * @param complexFilters
+     * @param tags
+     * @return boolean
+     */
     public static boolean isInCorrectGroups(ComplexFilters complexFilters, HashSet<String> tags){
 
         final HashSet<String> safe = Objects.isNull(tags) ? new HashSet<>() : tags;
