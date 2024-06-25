@@ -23,6 +23,10 @@ public class Promotions {
                 .anyMatch(promotion -> promotion.getStartDate().isBefore(OffsetDateTime.now()) && promotion.getEndDate().isAfter(OffsetDateTime.now()));
     }
 
+    public void removeExpiredPromotions(){
+        cache.values().removeIf(promotion -> promotion.getEndDate().isBefore(OffsetDateTime.now()));
+    }
+
     public static boolean isInCorrectGroups(ComplexFilters complexFilters, HashSet<String> tags){
 
         final HashSet<String> safe = Objects.isNull(tags) ? new HashSet<>() : tags;
