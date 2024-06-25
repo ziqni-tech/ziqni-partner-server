@@ -22,7 +22,7 @@ public class Promotions {
                 .filter(promotion -> promotion.getEntrantMemberTagsFilter().getMust() != null)
                 .filter(promotion -> promotion.getEntrantMemberTagsFilter().getMust().contains(playerId))
                 .filter(promotion -> promotion.getEntrantMemberTagsFilter().getMust().contains(operatorId))
-                .anyMatch(promotion -> promotion.getStartDate().isBefore(OffsetDateTime.now()) && promotion.getEndDate().isAfter(OffsetDateTime.now()));
+                .anyMatch(promotion -> promotion.getStartDate().minusDays(3).isBefore(OffsetDateTime.now()) && promotion.getEndDate().plusMinutes(30).isAfter(OffsetDateTime.now()));
     }
 
     public void removeExpiredPromotions(){
