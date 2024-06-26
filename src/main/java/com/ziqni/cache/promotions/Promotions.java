@@ -67,11 +67,11 @@ public abstract class Promotions implements Runnable, CacheLoader<PromotionKey, 
         promotionsCache.put(promotion.getKey(), promotion);
     }
 
-    public boolean playerHasActivePromotionsWithCache(String playerId, String operatorId){
+    public boolean playerHasActivePromotionsWithCache(String playerId, String operatorId) {
         return this.playersQueryCache.get(new PlayerKey(playerId, operatorId));
     }
 
-    public boolean playerHasActivePromotions(String playerId, String operatorId){
+    public boolean playerHasActivePromotions(String playerId, String operatorId) {
         return promotionsCache.asMap().values().stream()
                 .filter(promotion -> isInCorrectGroups(promotion.getMemberTagsFilter(), Set.of(operatorId)))
                 .anyMatch(promotion -> promotion.getStartDate().isBefore(OffsetDateTime.now()) && promotion.getEndDate().isAfter(OffsetDateTime.now()));
