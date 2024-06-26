@@ -65,12 +65,14 @@ class PromotionsTest {
         final var m1Result = promotions.playerHasActivePromotions(member1.id, OPERATOR_TAG_123);
         final var m2Result = promotions.playerHasActivePromotions(member2.id, OPERATOR_TAG_456);
 
+        final var m1ResultWithCache = promotions.playerHasActivePromotionsWithCache(member1.id, OPERATOR_TAG_123);
+        final var m2ResultWithCache = promotions.playerHasActivePromotionsWithCache(member2.id, OPERATOR_TAG_456);
+
         assertTrue( m1Result);
         assertFalse( m2Result);
-    }
 
-    @Test
-    void loadPromotion() {
+        assertTrue( m1ResultWithCache);
+        assertFalse( m2ResultWithCache);
     }
 
     static class SimpleMember{
