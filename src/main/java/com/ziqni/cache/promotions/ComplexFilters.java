@@ -1,4 +1,4 @@
-package com.ziqni.mocks.promotions;
+package com.ziqni.cache.promotions;
 
 import java.util.Objects;
 import java.util.ArrayList;
