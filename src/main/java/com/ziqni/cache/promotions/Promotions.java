@@ -3,12 +3,12 @@ package com.ziqni.cache.promotions;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.CacheLoader;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.LoadingCache;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-
 import java.time.OffsetDateTime;
-import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -28,7 +28,9 @@ public abstract class Promotions implements Runnable, CacheLoader<PromotionKey, 
     /** The scheduler. */
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     /** The cache. */
-    private final Cache<PromotionKey, Promotion> promotionsCache;
+    private final LoadingCache<PromotionKey, Promotion> promotionsCache;
+    /** The players query cache. */
+    private final LoadingCache<PlayerKey, Boolean> playersQueryCache;
     /** The schedule at fixed rate. */
     private ScheduledFuture<?> scheduleAtFixedRate;
     /** The last run time. */
@@ -36,6 +38,12 @@ public abstract class Promotions implements Runnable, CacheLoader<PromotionKey, 
 
     public Promotions() {
         this.promotionsCache = Caffeine.newBuilder().build(this);
+        this.playersQueryCache = Caffeine.newBuilder().build(new CacheLoader<PlayerKey, Boolean>() {
+            @Override
+            public @Nullable Boolean load(PlayerKey key) {
+                return playerHasActivePromotions(key.getId(), key.getOperatorId());
+            }
+        });
     }
 
     public void start(){
@@ -59,11 +67,13 @@ public abstract class Promotions implements Runnable, CacheLoader<PromotionKey, 
         promotionsCache.put(promotion.getKey(), promotion);
     }
 
+    public boolean playerHasActivePromotionsWithCache(String playerId, String operatorId){
+        return this.playersQueryCache.get(new PlayerKey(playerId, operatorId));
+    }
+
     public boolean playerHasActivePromotions(String playerId, String operatorId){
         return promotionsCache.asMap().values().stream()
-                .filter(promotion -> promotion.getMemberTagsFilter() != null)
-                .filter(promotion -> promotion.getMemberTagsFilter().getMust() != null)
-                .filter(promotion -> promotion.getMemberTagsFilter().getMust().contains(operatorId))
+                .filter(promotion -> isInCorrectGroups(promotion.getMemberTagsFilter(), Set.of(operatorId)))
                 .anyMatch(promotion -> promotion.getStartDate().isBefore(OffsetDateTime.now()) && promotion.getEndDate().isAfter(OffsetDateTime.now()));
     }
 
@@ -77,9 +87,9 @@ public abstract class Promotions implements Runnable, CacheLoader<PromotionKey, 
      * @param tags
      * @return boolean
      */
-    public static boolean isInCorrectGroups(ComplexFilters complexFilters, HashSet<String> tags){
+    public static boolean isInCorrectGroups(ComplexFilters complexFilters, Set<String> tags){
 
-        final HashSet<String> safe = Objects.isNull(tags) ? new HashSet<>() : tags;
+        final Set<String> safe = Objects.isNull(tags) ? Set.of() : tags;
 
         final var must =
                 complexFilters.getMust() == null ||
