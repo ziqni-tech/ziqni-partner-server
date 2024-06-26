@@ -38,7 +38,7 @@ public abstract class Promotions implements Runnable, CacheLoader<PromotionKey, 
 
     public Promotions() {
         this.promotionsCache = Caffeine.newBuilder().build(this);
-        this.playersQueryCache = Caffeine.newBuilder().build(new CacheLoader<PlayerKey, Boolean>() {
+        this.playersQueryCache = Caffeine.newBuilder().expireAfterWrite(30, TimeUnit.SECONDS).build(new CacheLoader<PlayerKey, Boolean>() {
             @Override
             public @Nullable Boolean load(PlayerKey key) {
                 return playerHasActivePromotions(key.getId(), key.getOperatorId());
