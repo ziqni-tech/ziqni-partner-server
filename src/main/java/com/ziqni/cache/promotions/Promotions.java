@@ -3,6 +3,7 @@ package com.ziqni.cache.promotions;
 import com.github.benmanes.caffeine.cache.CacheLoader;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
+import com.ziqni.admin.sdk.model.DependantOn;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.time.OffsetDateTime;
@@ -86,7 +87,7 @@ public abstract class Promotions implements Runnable, CacheLoader<PromotionKey, 
      * @param tags
      * @return boolean
      */
-    public static boolean isInCorrectGroups(ComplexFilters complexFilters, Set<String> tags){
+    public static boolean isInCorrectGroups(DependantOn complexFilters, Set<String> tags){
 
         final Set<String> safe = Objects.isNull(tags) ? Set.of() : tags;
 
