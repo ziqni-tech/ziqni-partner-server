@@ -118,6 +118,7 @@ public abstract class Promotions implements Runnable, CacheLoader<PromotionKey, 
         if(OffsetDateTime.now().toEpochSecond()-getLastRun() > waitBetweenDelaySeconds){
             this.lastRun.set(OffsetDateTime.now().toEpochSecond());
             loadNewPromotionsFromRemote(getLastRun());
+            removeExpiredPromotions();
         }
     }
 
