@@ -1,5 +1,7 @@
 package com.ziqni.cache.promotions;
 
+import com.ziqni.admin.sdk.model.DependantOn;
+
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -11,10 +13,10 @@ public class Promotion {
     private OffsetDateTime startDate;
     private OffsetDateTime endDate;
     private String name;
-    private ComplexFilters memberTagsFilter;
+    private DependantOn memberTagsFilter;
     private List<String> products;
 
-    public Promotion(String id, PromotionType type, OffsetDateTime startDate, OffsetDateTime endDate, String name, ComplexFilters memberTagsFilter) {
+    public Promotion(String id, PromotionType type, OffsetDateTime startDate, OffsetDateTime endDate, String name, DependantOn memberTagsFilter) {
         this.id = id;
         this.type = type;
         this.startDate = startDate;
@@ -24,7 +26,7 @@ public class Promotion {
         this.products = List.of();
     }
 
-    public Promotion(String id, PromotionType type, OffsetDateTime startDate, OffsetDateTime endDate, String name, ComplexFilters memberTagsFilter, List<String> products) {
+    public Promotion(String id, PromotionType type, OffsetDateTime startDate, OffsetDateTime endDate, String name, DependantOn memberTagsFilter, List<String> products) {
         this.id = id;
         this.type = type;
         this.startDate = startDate;
@@ -50,7 +52,7 @@ public class Promotion {
         return name;
     }
 
-    public ComplexFilters getMemberTagsFilter() {
+    public DependantOn getMemberTagsFilter() {
         return memberTagsFilter;
     }
 

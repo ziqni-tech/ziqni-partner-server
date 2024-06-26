@@ -1,5 +1,6 @@
 package com.ziqni.cache.promotions;
 
+import com.ziqni.admin.sdk.model.DependantOn;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,7 @@ class PromotionsTest {
 
         for(int i = 0; i < 10; i++) {
             final var id = count.incrementAndGet();
-            final var promotion = new Promotion("id"+id, PromotionType.Achievement, OffsetDateTime.now().minusDays(1), OffsetDateTime.now().plusDays(1), String.valueOf(id), new ComplexFilters().addMustItem(OPERATOR_TAG_123));
+            final var promotion = new Promotion("id"+id, PromotionType.Achievement, OffsetDateTime.now().minusDays(1), OffsetDateTime.now().plusDays(1), String.valueOf(id), new DependantOn().addMustItem(OPERATOR_TAG_123));
             mockPromotions.put(promotion.getId(), promotion);
         }
     }
@@ -35,7 +36,7 @@ class PromotionsTest {
 
         for(int i = 0; i < numberToCreate; i++) {
             final var id = count.incrementAndGet();
-            final var promotion = new Promotion("id-"+id, PromotionType.Achievement, OffsetDateTime.now().minusDays(1), OffsetDateTime.now().plusDays(1), String.valueOf(id), new ComplexFilters().addMustItem(OPERATOR_TAG_123));
+            final var promotion = new Promotion("id-"+id, PromotionType.Achievement, OffsetDateTime.now().minusDays(1), OffsetDateTime.now().plusDays(1), String.valueOf(id), new DependantOn().addMustItem(OPERATOR_TAG_123));
             mockPromotions.put(promotion.getId(), promotion);
         }
 
